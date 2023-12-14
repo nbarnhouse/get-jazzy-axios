@@ -51,8 +51,28 @@ app.get('/artist', (req, res) => {
     res.send(artistListArray);
 });
 
+app.get('/song', (req, res) => {
+    res.send(songListArray);
+});
+
 // TODO - Add GET for songs
 
-app.listen(PORT, () => {
-    console.log('listening on port', PORT)
+app.listen(5001, () => {
+    console.log('listening on port', 5001)
 });
+
+//Post Song to Server
+app.post('/artist', (req, res) => {
+    const newArtist = req.body;
+
+    if (newArtist.text == null) {
+        res.sendStatus(400);
+        return; 
+      }
+
+    artistListArray.push(req.body);
+
+    res.sendStatus(201);
+
+});
+
