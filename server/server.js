@@ -1,7 +1,18 @@
 const express = require('express');
+console.log('Test for express on js_number_group');
 
 const app = express();
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
+
+//registered static files
+app.use(express.static('server/public'));
+//Allows acceptance of JSON data in the body of the request
+app.use(express.json());
+
+app.listen(5001, () => {
+    console.log('listening on port', 5001)
+});
+
 
 const artistListArray = [
     {
@@ -45,33 +56,62 @@ const songListArray = [
     },
 ];
 
-app.use(express.static('server/public'));
 
+// TODO - Add GET for artist
 app.get('/artist', (req, res) => {
     res.send(artistListArray);
 });
 
+// TODO - Add GET for songs
 app.get('/song', (req, res) => {
     res.send(songListArray);
 });
 
-// TODO - Add GET for songs
 
-app.listen(5001, () => {
-    console.log('listening on port', 5001)
+//Post Route to send Artist to Server
+app.post('/artist', (req, res) => {
+
+    const newArtist = req.body;
+    // store data
+    console.log(`Get a POST request for artist`, newArtist);
+
+    if (
+        newArtist.name == null ||
+        newArtist.born == null ||
+        newArtist.died == null ||
+        !newArtist.name ||
+        !newArtist.born ||
+        !newArtist.died
+      ) {
+        res.sendStatus(400);
+        return;
+      };
+
+    artistListArray.push(newArtist);
+    //console.log(`New Artist`, newArtist);
+    res.sendStatus(201);
+
 });
 
-//Post Song to Server
-app.post('/artist', (req, res) => {
-    const newArtist = req.body;
+//Post Route to send Song to Server
+app.post('/song', (req, res) => {
 
-    if (newArtist.text == null) {
+    const newSong = req.body;
+    // store data
+    console.log(`Get a POST request for song`, newSong);
+
+    if (
+        newSong.title == null ||
+        newSong.artist == null ||
+        !newSong.title ||
+        !newSong.artist
+      ) {
         res.sendStatus(400);
-        return; 
-      }
-
-    artistListArray.push(req.body);
-
+        return;
+      };
+    
+    songListArray.push(newSong);
+    //console.log(`New Song`, newSong);
     res.sendStatus(201);
 
 });
