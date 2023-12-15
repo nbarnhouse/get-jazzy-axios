@@ -57,12 +57,12 @@ const songListArray = [
 ];
 
 
-// TODO - Add GET for artist
+// Get route to get Artist from Server
 app.get('/artist', (req, res) => {
     res.send(artistListArray);
 });
 
-// TODO - Add GET for songs
+// Get route to get Song from Server
 app.get('/song', (req, res) => {
     res.send(songListArray);
 });

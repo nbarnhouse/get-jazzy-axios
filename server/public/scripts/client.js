@@ -1,9 +1,34 @@
 
+function fetchSong() {
+    //Get request for song
+    axios({
+        method: 'GET',
+        url: '/song'
+    })
+        .then(function (response) {
+            // Code that will run on successful response
+            // from the server.
+            console.log(response);
+            // quotesFromServer will be an Array of quotes
+            let quotesFromServer = response.data;
+            let contentDiv = document.querySelector('#songTableBody');
+            for (let song of quotesFromServer) {
+                contentDiv.innerHTML += `
+                <tr>
+                    <td>${song.title}</td>
+                    <td>${song.artist}</td>
+                </tr>
+            `;
+            }   
+        }).catch(function (error) {
+            // Code that will run on any errors from the server.
+            console.log(error);
+            console.error('ERROR', error)
+        });
+};
 
-
-function onReady() {
-    console.log('Hello from client.js');
-
+function fetchArtist() {
+    //Get request for artist
     axios({
         method: 'GET',
         url: '/artist'
@@ -27,39 +52,68 @@ function onReady() {
         }).catch(function (error) {
             // Code that will run on any errors from the server.
             console.log(error);
-            alert('Something bad happened! Check the console for more details.')
-        });
+            console.error('ERROR', error)
+        })
+};
 
-    // TODO Add Axios request for /songs and display on DOM
+// function renderSong() {
+//   //Render song data to the DOM
+// };
 
-    axios({
-        method: 'GET',
-        url: '/song'
+// function renderArtist() {
+//   //Render artist data to the DOM
+// };
+
+function submitSong(event) {
+    //Post function for song
+
+    event.preventDefault();
+    const titleElement = document.querySelector('#songTitle');
+    const artistElement = document.querySelector('#songArtist');
+
+    const newSongCat = {
+        title: titleElement.value,
+        artist: artistElement.value,
+      };
+
+    axios ({
+        method: 'POST', 
+        url: '/artist', 
+        data: newSongCat
     })
-        .then(function (response) {
-            // Code that will run on successful response
-            // from the server.
-            console.log(response);
-            // quotesFromServer will be an Array of quotes
-            let quotesFromServer = response.data;
-            let contentDiv = document.querySelector('#songTableBody');
-            for (let song of quotesFromServer) {
-                contentDiv.innerHTML += `
-                <tr>
-                    <td>${song.title}</td>
-                    <td>${song.artist}</td>
-                </tr>
-            `;
-            }
-        }).catch(function (error) {
-            // Code that will run on any errors from the server.
-            console.log(error);
-            alert('Something bad happened! Check the console for more details.')
-        });    
+    .then((response) => {
+        fetchSong();
 
-}
+    }).catch((error) => {
+        console.error('ERROR', error);
+    });    
+};
 
-onReady();
+function submitArtist(event) {
+    //Post function for artist
+    console.log('Post function for artist');
 
+    event.preventDefault();
+    const nameElement = document.querySelector('#artistName');
+    const birthElement = document.querySelector('#artistBirth');
+    const deathElement = document.querySelector('#artistDeath');
 
-//Add POST to this file
+    const newArtistCat = {
+        name: nameElement.value,
+        born: birthElement.value,
+        died: deathElement.value
+      };
+
+    axios ({
+        method: 'POST', 
+        url: '/artist', 
+        data: newArtistCat
+    })
+    .then((response) => {
+    //GET new data
+    fetchArtist();
+    }).catch((error) => {
+        console.error('ERROR', error);
+       });
+
+};

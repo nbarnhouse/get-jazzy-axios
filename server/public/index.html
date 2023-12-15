@@ -10,14 +10,22 @@
 </head>
 <body>
     <h1>Get Jazzy</h1>
-    <form id="artistForm" onsubmit="addArtist(event)">
+    <form id="artistForm" onsubmit="submitArtist(event)">
         <h2>Add A New Artist</h2>
         <label for="artistName">Artist Name</label>
-        <input type="text" id="artistName" name="artistName"><br>
-        <label for="artistBirth">Artist Birth Date</label>
-        <input type="text" id="artistBirth" name="artistBirth"><br>
-        <label for="artistDeath">Artist Death Date</label>
-        <input type="text" id="artistDeath" name="artistDeath"><br>
+        <input type="text" id="artistName" name="artistName">
+        <label for="artistBirth">Artist Birth Year</label>
+        <input type="text" id="artistBirth" name="artistBirth">
+        <label for="artistDeath">Artist Death Year</label>
+        <input type="text" id="artistDeath" name="artistDeath">
+        <input type="submit" id="submit" name="submit">
+    </form><br>
+    <form id="songForm" onsubmit="submitSong(event)">
+        <h2>Add A New Song</h2>
+        <label for="songTitle">Song Title</label>
+        <input type="text" id="songTitle" name="songTitle">
+        <label for="songArtist">Song Artist</label>
+        <input type="text" id="songArtist" name="songArtist">
         <input type="submit" id="submit" name="submit">
     </form>
 
