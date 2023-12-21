@@ -1,3 +1,4 @@
+
 const artistListArray = [
     {
         name: 'Miles Davis',
@@ -20,3 +21,5 @@ const artistListArray = [
         died: 1971,
     },
 ];
+
+module.exports = artistListArray;

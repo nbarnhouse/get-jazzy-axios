@@ -1,3 +1,4 @@
+
 const songListArray = [
     {
         title: 'Take Five',
@@ -16,3 +17,5 @@ const songListArray = [
         artist: 'The Dave Brubeck Quartet',
     },
 ];
+
+module.exports = songListArray;
